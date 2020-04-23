@@ -18,16 +18,26 @@ export class RecipeService {
       ]
     ),
     new Recipe(
-      "Another Test1 Recipe",
-      "This is a Test",
+      "Chicken Masala",
+      "Served With Garlic Bread!",
       "https://upload.wikimedia.org/wikipedia/commons/f/f5/Handi-chicken-recipe.jpg",
-      []
+      [
+        new Ingredient("Chicken", 1),
+        new Ingredient("Bread", 5),
+        new Ingredient("Onions", 2),
+      ]
     ),
     new Recipe(
-      "A Test Recipe",
-      "This is a Test",
+      "Special Italian Pizza",
+      "Awesome when Hot!",
       "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/8/6/0/WU2301_Four-Cheese-Pepperoni-Pizzadilla_s4x3.jpg.rend.hgtvcom.826.620.suffix/1565115622965.jpeg",
-      []
+      [
+        new Ingredient("Pizza Bread", 2),
+        new Ingredient("Olives", 15),
+        new Ingredient("Cheese", 5),
+        new Ingredient("Sauce", 1),
+        new Ingredient("Mayonaise", 1),
+      ]
     ),
   ];
 
@@ -35,6 +45,10 @@ export class RecipeService {
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipe(index: number) {
+    return this.recipes.slice()[index];
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
