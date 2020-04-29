@@ -1,14 +1,17 @@
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-7">
     <app-shopping-edit></app-shopping-edit>
     <hr />
+    <h4><strong>Click on any Ingredient to Edit :</strong></h4>
     <ul class="list-group">
       <li
         class="list-group-item"
         style="cursor: pointer;"
-        *ngFor="let ingredient of ingredients"
+        *ngFor="let ingredient of ingredients; let i = index"
+        (click)="onEditItem(i)"
       >
-        {{ ingredient.name }} ({{ ingredient.amount }})
+        {{ ingredient.name }}
+        <span class="badge">{{ ingredient.amount }}</span>
       </li>
     </ul>
   </div>

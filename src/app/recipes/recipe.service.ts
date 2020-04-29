@@ -1,11 +1,12 @@
 import { Recipe } from "./recipe.model";
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  recipeChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(
       "Barbeque Meat Loaf",
@@ -18,25 +19,53 @@ export class RecipeService {
       ]
     ),
     new Recipe(
-      "Chicken Masala",
-      "Served With Garlic Bread!",
-      "https://upload.wikimedia.org/wikipedia/commons/f/f5/Handi-chicken-recipe.jpg",
+      "Kheer (Rice Pudding)",
+      "Awesome when Hot!",
+      "https://www.cookwithmanali.com/wp-content/uploads/2017/06/Indian-Rice-Kheer-500x375.jpg",
       [
-        new Ingredient("Chicken", 1),
-        new Ingredient("Bread", 5),
-        new Ingredient("Onions", 2),
+        new Ingredient("Coconut Milk", 2),
+        new Ingredient("Raisins", 1),
+        new Ingredient("Basmati Rice", 5),
+        new Ingredient("Milk", 1),
+        new Ingredient("Rose Water", 1),
+        new Ingredient("Nuts", 1),
+        new Ingredient("Cardomom", 1),
       ]
     ),
     new Recipe(
-      "Special Italian Pizza",
-      "Awesome when Hot!",
-      "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2019/8/6/0/WU2301_Four-Cheese-Pepperoni-Pizzadilla_s4x3.jpg.rend.hgtvcom.826.620.suffix/1565115622965.jpeg",
+      "Chinese Chicken Fried Rice",
+      "Chicken, rice, soy sauce and shredded egg stir fried together.",
+      "https://www.sanjeevkapoor.com/UploadFiles/RecipeImages/Chicken-Fried-Rice-Best-of-Chinese-Cooking.JPG",
       [
-        new Ingredient("Pizza Bread", 2),
-        new Ingredient("Olives", 15),
-        new Ingredient("Cheese", 5),
-        new Ingredient("Sauce", 1),
+        new Ingredient("Egg", 1),
+        new Ingredient("Onion", 1),
+        new Ingredient("White Rice", 5),
+        new Ingredient("Soy Sauce", 2),
         new Ingredient("Mayonaise", 1),
+      ]
+    ),
+    new Recipe(
+      "World's Best Lasagna",
+      "It takes a little work, but it is worth it.",
+      "https://c4.wallpaperflare.com/wallpaper/127/626/498/food-lasagna-meal-wallpaper-preview.jpg",
+      [
+        new Ingredient("Garlic", 2),
+        new Ingredient("Tomato Paste", 2),
+        new Ingredient("White  Sugar", 5),
+        new Ingredient("Lasagna Noodles", 12),
+        new Ingredient("Cheese", 1),
+      ]
+    ),
+    new Recipe(
+      "Strawberry Mojito",
+      "Special for Holiday and Events!",
+      "https://www.simplyrecipes.com/wp-content/uploads/2019/07/Strawberry-Mojito-LEAD-1.jpg",
+      [
+        new Ingredient("Lime", 2),
+        new Ingredient("Mint Leaves", 1),
+        new Ingredient("Strawberries", 5),
+        new Ingredient("White Rum", 1),
+        new Ingredient("Club Soda", 1),
       ]
     ),
   ];
@@ -53,5 +82,20 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipeChanged.next(this.recipes.slice());
   }
 }

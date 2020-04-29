@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" *ngIf="currentUser">
   <div class="container-fluid">
     <div class="navbar-header">
       <a routerLink="/recipes" class="navbar-brand">Recipe Book</a>
@@ -9,17 +9,12 @@
         <li routerLinkActive="active">
           <a routerLink="/shopping-list"> Shopping List</a>
         </li>
+        <li routerLinkActive="active">
+          <a routerLink="/users">Users</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a class="dropdown-toggle" role="button"
-            >Manage <span class="caret"></span
-          ></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;">Save Data</a></li>
-            <li><a style="cursor: pointer;">Fetch Data</a></li>
-          </ul>
-        </li>
+        <li><a style="cursor: pointer;" (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
